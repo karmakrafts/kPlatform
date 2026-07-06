@@ -16,7 +16,7 @@
 
 package dev.karmakrafts.kplatform
 
-internal object AndroidGlobalMemory : Memory {
+internal object AndroidRuntimeMemory : Memory {
     override val size: Long
         get() = TODO("Not yet implemented")
     override val available: Long

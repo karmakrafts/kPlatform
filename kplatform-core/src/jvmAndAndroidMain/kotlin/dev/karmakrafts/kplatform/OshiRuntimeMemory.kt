@@ -16,6 +16,10 @@
 
 package dev.karmakrafts.kplatform
 
-internal object OshiRuntimeMemory : Memory by OshiGlobalMemory {
+import java.lang.Runtime as JRuntime
 
+internal object OshiRuntimeMemory : Memory {
+    override val size: Long by lazy(JRuntime.getRuntime()::maxMemory)
+    override val available: Long get() = JRuntime.getRuntime().totalMemory()
+    override val used: Long get() = available - JRuntime.getRuntime().freeMemory()
 }

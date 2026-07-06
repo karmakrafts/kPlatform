@@ -24,7 +24,7 @@ import kotlinx.cinterop.CPointerVar
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.posix.environ
 
-internal actual fun getRuntimeMemory(): Memory = AndroidMemory
+internal actual fun getRuntimeMemory(): Memory = AndroidRuntimeMemory
 
 @Suppress("NOTHING_TO_INLINE")
 internal actual inline fun getEnviron(): CPointer<CPointerVar<ByteVar>>? = environ

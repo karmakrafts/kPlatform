@@ -16,6 +16,4 @@
 
 package dev.karmakrafts.kplatform
 
-internal object AppleRuntimeMemory : Memory by AppleGlobalMemory {
-
-}
+internal object AppleRuntimeMemory : Memory by AppleGlobalMemory
