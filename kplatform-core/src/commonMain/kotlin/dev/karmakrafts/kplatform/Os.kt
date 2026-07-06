@@ -28,15 +28,15 @@ interface Os {
     /**
      * The full name of the current operating system.
      */
-    val name: String
+    val name: String?
 
     /**
      * The version of the current operating system (or its kernel).
      */
-    val version: String
+    val version: String?
 
     /**
      * The vendor name of the current operating system.
      */
-    val vendor: String
+    val vendor: String?
 }

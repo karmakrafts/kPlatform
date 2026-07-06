@@ -39,9 +39,9 @@ internal external interface Process : JsAny {
 }
 
 internal external interface Os : JsAny {
-    val platform: String
-    val release: String
-    val type: String
+    val platform: String?
+    val release: String?
+    val type: String?
 }
 
 internal external val process: Process

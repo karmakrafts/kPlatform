@@ -18,7 +18,7 @@ package dev.karmakrafts.kplatform
 
 internal object WasiOs : Os {
     override val family: OsFamily get() = OsFamily.UNKNOWN
-    override val name: String = "Unknown"
-    override val version: String = "Unknown"
-    override val vendor: String = "Unknown"
+    override val name: String? = null
+    override val version: String? = null
+    override val vendor: String? = null
 }

@@ -19,7 +19,7 @@ package dev.karmakrafts.kplatform
 import android.os.Build
 
 internal object AndroidOs : Os {
-    override val family: OsFamily = OsFamily.ANDROID
+    override val family: OsFamily get() = OsFamily.ANDROID
     override val name: String = "Android"
     override val version: String get() = Build.VERSION.RELEASE
     override val vendor: String = "Google"

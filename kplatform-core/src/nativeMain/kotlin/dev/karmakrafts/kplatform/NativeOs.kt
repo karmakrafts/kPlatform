@@ -38,7 +38,13 @@ internal object NativeOs : Os {
         }
     }
 
-    override val name: String by lazy(family::displayName)
-    override val version: String by lazy { getKernelVersion() ?: "Unknown" }
-    override val vendor: String by lazy { getKernelVendor() ?: "Unknown" }
+    override val name: String? by lazy {
+        when (family) {
+            OsFamily.UNKNOWN -> null
+            else -> family.displayName
+        }
+    }
+
+    override val version: String? by lazy(::getKernelVersion)
+    override val vendor: String? by lazy(::getKernelVendor)
 }

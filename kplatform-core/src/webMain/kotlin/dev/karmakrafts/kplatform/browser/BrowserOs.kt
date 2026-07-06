@@ -36,15 +36,21 @@ internal object BrowserOs : Os {
         }
     }
 
-    override val name: String by lazy(family::displayName)
-    override val version: String = "Unknown"
+    override val name: String? by lazy {
+        when (family) {
+            OsFamily.UNKNOWN -> null
+            else -> family.displayName
+        }
+    }
 
-    override val vendor: String by lazy {
+    override val version: String? = null
+
+    override val vendor: String? by lazy {
         when {
             NodeOs.family == OsFamily.WINDOWS -> "Microsoft"
             NodeOs.family == OsFamily.ANDROID -> "Google"
             NodeOs.family.isApple -> "Apple"
-            else -> "Unknown"
+            else -> null
         }
     }
 }
