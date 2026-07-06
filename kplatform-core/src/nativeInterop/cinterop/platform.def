@@ -1,0 +1,19 @@
+package = dev.karmakrafts.kplatform.interop
+
+---
+
+#define KPLATFORM_EXPORT __attribute__((visibility("default")))
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+extern char** environ; // This exists on iOS etc. but is not exposed by CInterop platform bindings
+
+KPLATFORM_EXPORT static inline char** kplatform_getenv() {
+    return environ;
+}
+
+#ifdef __cplusplus
+};
+#endif

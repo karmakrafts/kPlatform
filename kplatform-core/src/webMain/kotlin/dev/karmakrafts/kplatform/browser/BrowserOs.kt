@@ -1,0 +1,50 @@
+/*
+ * Copyright 2026 Karma Krafts
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package dev.karmakrafts.kplatform.browser
+
+import dev.karmakrafts.kplatform.Os
+import dev.karmakrafts.kplatform.OsFamily
+import dev.karmakrafts.kplatform.node.NodeOs
+import web.navigator.navigator
+
+internal object BrowserOs : Os {
+    override val family: OsFamily by lazy {
+        val platform = (if (navigator.isExt) navigator.ext.userAgentData.platform else navigator.platform).lowercase()
+        when {
+            "win32" in platform || "windows" in platform -> OsFamily.WINDOWS
+            "linux" in platform -> OsFamily.LINUX
+            "tvos" in platform -> OsFamily.TVOS
+            "watchos" in platform -> OsFamily.WATCHOS
+            "ios" in platform || "iphoneos" in platform -> OsFamily.IOS
+            "darwin" in platform || "macos" in platform || "osx" in platform -> OsFamily.MACOS
+            "freebsd" in platform || "openbsd" in platform -> OsFamily.BSD
+            else -> OsFamily.UNKNOWN
+        }
+    }
+
+    override val name: String by lazy(family::displayName)
+    override val version: String = "Unknown"
+
+    override val vendor: String by lazy {
+        when {
+            NodeOs.family == OsFamily.WINDOWS -> "Microsoft"
+            NodeOs.family == OsFamily.ANDROID -> "Google"
+            NodeOs.family.isApple -> "Apple"
+            else -> "Unknown"
+        }
+    }
+}
