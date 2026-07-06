@@ -22,6 +22,10 @@ import kotlinx.cinterop.ByteVar
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.CPointerVar
 import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.plus
+import kotlinx.cinterop.pointed
+import kotlinx.cinterop.toKStringFromUtf8
+import kotlinx.cinterop.value
 
 internal expect inline fun getEnviron(): CPointer<CPointerVar<ByteVar>>?
 internal expect fun getRuntimeMemory(): Memory
@@ -33,7 +37,22 @@ internal object NativeRuntime : Runtime {
     override val vendor: String = "JetBrains"
     override val memory: Memory get() = getRuntimeMemory()
 
-    override val environment: Map<String, String> by lazy {
-        TODO()
+    override val environment: Environment by lazy {
+        Environment.build {
+            val envAddr = getEnviron()
+            // Environment array is null-terminated itself
+            var envVarAddr = envAddr?.pointed
+            while (envVarAddr != null) {
+                val envVar = envVarAddr.value?.toKStringFromUtf8()
+                if (envVar == null || '=' !in envVar) {
+                    envVarAddr = envAddr?.pointed
+                    continue
+                }
+                val split = envVar.split("=")
+                if (split.size == 1) this[split[0]] = ""
+                else this[split[1]] = split[1]
+                envVarAddr = (envAddr + 1)?.pointed
+            }
+        }
     }
 }

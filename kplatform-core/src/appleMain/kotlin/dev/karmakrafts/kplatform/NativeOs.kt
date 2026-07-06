@@ -16,14 +16,5 @@
 
 package dev.karmakrafts.kplatform
 
-internal object JvmRuntime : Runtime {
-    override val type: RuntimeType = RuntimeType.JVM
-    override val name: String
-        get() = TODO("Not yet implemented")
-    override val vendor: String
-        get() = TODO("Not yet implemented")
-    override val version: String
-        get() = TODO("Not yet implemented")
-    override val memory: Memory get() = OshiRuntimeMemory
-    override val environment: Environment = Environment(System.getenv())
-}
+internal actual fun getKernelVersion(): String? = "Unknown" // TODO
+internal actual fun getKernelVendor(): String? = "Unknown" // TODO

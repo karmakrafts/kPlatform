@@ -18,6 +18,7 @@
 
 package dev.karmakrafts.kplatform.node
 
+import dev.karmakrafts.kplatform.Environment
 import dev.karmakrafts.kplatform.Memory
 import dev.karmakrafts.kplatform.Runtime
 import dev.karmakrafts.kplatform.RuntimeType
@@ -35,8 +36,8 @@ internal object NodeRuntime : Runtime {
     override val version: String get() = process.versions.node
     override val memory: Memory get() = NodeMemory
 
-    override val environment: Map<String, String?> by lazy {
-        HashMap<String, String?>().apply {
+    override val environment: Environment by lazy {
+        Environment.build {
             for ((key, value) in Object.entries(process.env)) {
                 this[key.toKotlinString()] = value?.toString()
             }

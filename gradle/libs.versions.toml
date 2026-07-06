@@ -3,7 +3,7 @@
 java = "17"
 
 androidGradle = "9.2.1" # https://developer.android.com/reference/tools/gradle-api
-kplatform = "1.10.4"
+kplatform = "1.0.0"
 kotlin = "2.4.0" # https://github.com/JetBrains/kotlin/releases
 kotlinBrowser = "2026.7.0" # https://github.com/JetBrains/kotlin-wrappers/releases
 dokka = "2.2.0" # https://github.com/Kotlin/dokka/releases

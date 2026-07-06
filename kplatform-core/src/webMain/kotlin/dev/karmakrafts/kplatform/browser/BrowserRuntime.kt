@@ -16,6 +16,7 @@
 
 package dev.karmakrafts.kplatform.browser
 
+import dev.karmakrafts.kplatform.Environment
 import dev.karmakrafts.kplatform.Memory
 import dev.karmakrafts.kplatform.Runtime
 import dev.karmakrafts.kplatform.RuntimeType
@@ -60,5 +61,5 @@ internal object BrowserRuntime : Runtime {
     }
 
     override val memory: Memory get() = BrowserMemory
-    override val environment: Map<String, String> = emptyMap()
+    override val environment: Environment get() = Environment.empty
 }

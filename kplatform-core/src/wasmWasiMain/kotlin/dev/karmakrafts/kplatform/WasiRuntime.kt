@@ -22,5 +22,5 @@ internal object WasiRuntime : Runtime {
     override val version: String = "Unknown"
     override val vendor: String = "Unknown"
     override val memory: Memory get() = Memory.Unknown
-    override val environment: Map<String, String> = emptyMap()
+    override val environment: Environment get() = Environment.empty
 }

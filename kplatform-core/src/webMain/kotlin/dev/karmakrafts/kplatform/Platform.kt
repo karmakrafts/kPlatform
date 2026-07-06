@@ -25,10 +25,10 @@ import dev.karmakrafts.kplatform.node.NodeRuntime
 import kotlin.js.ExperimentalWasmJsInterop
 import kotlin.js.js
 
-actual object Platform {
-    @OptIn(ExperimentalWasmJsInterop::class)
-    private fun checkIsNode(): Boolean = js("""typeof process !== 'undefined' && process.release.name === 'node'""")
+@OptIn(ExperimentalWasmJsInterop::class)
+private fun checkIsNode(): Boolean = js("""typeof process !== 'undefined' && process.release.name === 'node'""")
 
+actual object Platform {
     private val isNode: Boolean by lazy(::checkIsNode)
 
     actual val runtime: Runtime = if (isNode) NodeRuntime else BrowserRuntime

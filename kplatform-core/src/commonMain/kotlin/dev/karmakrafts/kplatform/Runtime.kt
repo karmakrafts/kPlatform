@@ -47,7 +47,7 @@ interface Runtime {
 
     /**
      * All system environment variables visible to the current process.
-     * For platforms that do not have direct access to the environment, this map will be empty.
+     * For platforms that do not have direct access to the environment, this will be empty.
      */
-    val environment: Map<String, String?>
+    val environment: Environment
 }
