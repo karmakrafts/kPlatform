@@ -16,4 +16,8 @@
 
 package dev.karmakrafts.kplatform
 
-internal actual fun getGlobalMemory(): Memory = LinuxGlobalMemory
+actual object Platform {
+    actual val os: Os get() = LinuxOs
+    actual val runtime: Runtime get() = LinuxRuntime
+    actual val memory: Memory get() = LinuxGlobalMemory
+}

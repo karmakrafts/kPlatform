@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalForeignApi::class)
-
 package dev.karmakrafts.kplatform
 
-import kotlinx.cinterop.ByteVar
-import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.CPointerVar
-import kotlinx.cinterop.ExperimentalForeignApi
-
-internal actual fun getRuntimeMemory(): Memory = AppleRuntimeMemory
-
-@Suppress("NOTHING_TO_INLINE")
-internal actual inline fun getEnviron(): CPointer<CPointerVar<ByteVar>>? = TODO()
+internal object LinuxOs : Os {
+    override val family: OsFamily
+        get() = TODO("Not yet implemented")
+    override val name: String
+        get() = TODO("Not yet implemented")
+    override val version: String
+        get() = TODO("Not yet implemented")
+    override val vendor: String
+        get() = TODO("Not yet implemented")
+}

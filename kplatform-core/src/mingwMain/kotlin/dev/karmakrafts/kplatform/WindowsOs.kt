@@ -25,15 +25,19 @@ import kotlinx.cinterop.value
 import platform.windows.DWORDVar
 
 @OptIn(ExperimentalForeignApi::class)
-internal actual fun getKernelVersion(): String? {
-    return if (NTDLL.RtlGetNtVersionNumbers == null) null
-    else memScoped {
-        val major = alloc<DWORDVar>()
-        val minor = alloc<DWORDVar>()
-        val build = alloc<DWORDVar>()
-        NTDLL.RtlGetNtVersionNumbers(major.ptr, minor.ptr, build.ptr)
-        "${major.value}.${minor.value}.${build.value and 0xFFFFU}"
+internal object WindowsOs : Os {
+    override val family: OsFamily get() = OsFamily.WINDOWS
+    override val name: String = "Windows"
+    override val vendor: String = "Microsoft"
+
+    override val version: String? by lazy {
+        if (NTDLL.RtlGetNtVersionNumbers == null) null
+        else memScoped {
+            val major = alloc<DWORDVar>()
+            val minor = alloc<DWORDVar>()
+            val build = alloc<DWORDVar>()
+            NTDLL.RtlGetNtVersionNumbers(major.ptr, minor.ptr, build.ptr)
+            "${major.value}.${minor.value}.${build.value and 0xFFFFU}"
+        }
     }
 }
-
-internal actual fun getKernelVendor(): String? = "Microsoft"

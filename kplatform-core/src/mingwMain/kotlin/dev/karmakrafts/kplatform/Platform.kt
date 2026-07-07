@@ -16,4 +16,8 @@
 
 package dev.karmakrafts.kplatform
 
-internal actual fun getGlobalMemory(): Memory = WindowsGlobalMemory
+actual object Platform {
+    actual val os: Os get() = WindowsOs
+    actual val runtime: Runtime get() = WindowsRuntime
+    actual val memory: Memory get() = WindowsGlobalMemory
+}

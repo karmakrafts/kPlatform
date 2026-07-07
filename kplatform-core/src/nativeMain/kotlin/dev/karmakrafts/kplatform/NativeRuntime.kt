@@ -27,19 +27,17 @@ import kotlinx.cinterop.pointed
 import kotlinx.cinterop.toKStringFromUtf8
 import kotlinx.cinterop.value
 
-internal expect inline fun getEnviron(): CPointer<CPointerVar<ByteVar>>?
-internal expect fun getRuntimeMemory(): Memory
-
-internal object NativeRuntime : Runtime {
+internal abstract class NativeRuntime : Runtime {
     override val type: RuntimeType get() = RuntimeType.NATIVE
     override val name: String = "Kotlin/Native"
-    override val version: String = "2.4.0" // TODO: sync this up via build config?
+    override val version: String = "2.4.0"
     override val vendor: String = "JetBrains"
-    override val memory: Memory get() = getRuntimeMemory()
+
+    abstract fun getEnvironmentAddress(): CPointer<CPointerVar<ByteVar>>?
 
     override val environment: Environment by lazy {
         Environment.build {
-            val envAddr = getEnviron()
+            val envAddr = getEnvironmentAddress()
             // Environment array is null-terminated itself
             var envVarAddr = envAddr?.pointed
             while (envVarAddr != null) {

@@ -16,4 +16,14 @@
 
 package dev.karmakrafts.kplatform
 
-internal actual fun getGlobalMemory(): Memory = AppleGlobalMemory
+import kotlinx.cinterop.ByteVar
+import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.CPointerVar
+import kotlinx.cinterop.ExperimentalForeignApi
+import platform.posix.__environ
+
+@OptIn(ExperimentalForeignApi::class)
+internal object LinuxRuntime : NativeRuntime() {
+    override fun getEnvironmentAddress(): CPointer<CPointerVar<ByteVar>>? = __environ
+    override val memory: Memory get() = LinuxRuntimeMemory
+}
