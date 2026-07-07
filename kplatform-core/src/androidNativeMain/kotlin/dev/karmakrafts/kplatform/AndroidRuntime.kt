@@ -16,5 +16,14 @@
 
 package dev.karmakrafts.kplatform
 
-internal actual fun getKernelVersion(): String? = "Unknown" // TODO
-internal actual fun getKernelVendor(): String? = "Unknown" // TODO
+import kotlinx.cinterop.ByteVar
+import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.CPointerVar
+import kotlinx.cinterop.ExperimentalForeignApi
+import platform.posix.environ
+
+@OptIn(ExperimentalForeignApi::class)
+internal object AndroidRuntime : NativeRuntime() {
+    override fun getEnvironmentAddress(): CPointer<CPointerVar<ByteVar>>? = environ
+    override val memory: Memory get() = AndroidRuntimeMemory
+}

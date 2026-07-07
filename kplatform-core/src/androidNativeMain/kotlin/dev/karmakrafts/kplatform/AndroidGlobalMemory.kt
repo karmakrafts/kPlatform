@@ -16,11 +16,29 @@
 
 package dev.karmakrafts.kplatform
 
+import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.UnsafeNumber
+import kotlinx.cinterop.alloc
+import kotlinx.cinterop.memScoped
+import kotlinx.cinterop.ptr
+import platform.linux.sysinfo
+import platform.posix.sysinfo
+
+@OptIn(ExperimentalForeignApi::class, UnsafeNumber::class)
 internal object AndroidGlobalMemory : Memory {
-    override val size: Long
-        get() = TODO("Not yet implemented")
-    override val available: Long
-        get() = TODO("Not yet implemented")
-    override val used: Long
-        get() = TODO("Not yet implemented")
+    override val size: Long by lazy {
+        memScoped {
+            val info = alloc<sysinfo>()
+            sysinfo(info.ptr)
+            info.totalram.toLong()
+        }
+    }
+
+    override val available: Long = memScoped {
+        val info = alloc<sysinfo>()
+        sysinfo(info.ptr)
+        info.freeram.toLong()
+    }
+
+    override val used: Long get() = size - available
 }

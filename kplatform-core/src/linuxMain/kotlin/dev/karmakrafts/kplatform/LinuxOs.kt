@@ -16,13 +16,44 @@
 
 package dev.karmakrafts.kplatform
 
+import kotlinx.cinterop.ByteVar
+import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.allocArray
+import kotlinx.cinterop.memScoped
+import kotlinx.cinterop.toKStringFromUtf8
+import platform.posix.SEEK_END
+import platform.posix.SEEK_SET
+import platform.posix.fclose
+import platform.posix.fopen
+import platform.posix.fread
+import platform.posix.fseek
+import platform.posix.ftell
+
+@OptIn(ExperimentalForeignApi::class)
 internal object LinuxOs : Os {
-    override val family: OsFamily
-        get() = TODO("Not yet implemented")
-    override val name: String
-        get() = TODO("Not yet implemented")
-    override val version: String
-        get() = TODO("Not yet implemented")
-    override val vendor: String
-        get() = TODO("Not yet implemented")
+    private val osRelease: Map<String, String?> by lazy {
+        memScoped {
+            val file = fopen("/etc/os-release", "rb")
+            fseek(file, 0, SEEK_END)
+            val size = ftell(file)
+            fseek(file, 0, SEEK_SET)
+            val buffer = allocArray<ByteVar>(size + 1) // Ensure trailing null byte so string conversion works
+            if (fread(buffer, 1U, size.toULong(), file).toLong() != size) return@memScoped emptyMap()
+            fclose(file)
+            buffer.toKStringFromUtf8().split("\n").associate { line ->
+                val splitLine = line.split("=", limit = 2)
+                if (splitLine.size == 1) splitLine[0] to null
+                else {
+                    var value = splitLine[1]
+                    if (value.startsWith('"') && value.endsWith('"')) value = value.substring(1..<value.lastIndex)
+                    splitLine[0] to value
+                }
+            }
+        }
+    }
+
+    override val family: OsFamily get() = OsFamily.LINUX
+    override val name: String? by lazy { osRelease["NAME"] }
+    override val version: String? by lazy { osRelease["VERSION"] }
+    override val vendor: String = "Linux/GNU"
 }

@@ -16,4 +16,8 @@
 
 package dev.karmakrafts.kplatform
 
-internal actual fun getGlobalMemory(): Memory = AndroidGlobalMemory
+actual object Platform {
+    actual val os: Os get() = AndroidOs
+    actual val runtime: Runtime get() = AndroidRuntime
+    actual val memory: Memory get() = AndroidGlobalMemory
+}

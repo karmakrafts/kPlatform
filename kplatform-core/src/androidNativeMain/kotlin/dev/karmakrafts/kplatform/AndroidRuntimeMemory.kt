@@ -16,11 +16,30 @@
 
 package dev.karmakrafts.kplatform
 
-internal object AndroidRuntimeMemory : Memory {
-    override val size: Long
-        get() = TODO("Not yet implemented")
-    override val available: Long
-        get() = TODO("Not yet implemented")
+import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.UnsafeNumber
+import kotlinx.cinterop.alloc
+import kotlinx.cinterop.memScoped
+import kotlinx.cinterop.ptr
+import kotlinx.cinterop.value
+import platform.posix._SC_PAGESIZE
+import platform.posix.fclose
+import platform.posix.fopen
+import platform.posix.fscanf
+import platform.posix.size_tVar
+import platform.posix.sysconf
+
+@OptIn(UnsafeNumber::class, ExperimentalForeignApi::class)
+internal object AndroidRuntimeMemory : Memory by AndroidGlobalMemory {
+    private val pageSize: Long by lazy { sysconf(_SC_PAGESIZE).toLong() }
+
     override val used: Long
-        get() = TODO("Not yet implemented")
+        get() = memScoped {
+            val file = fopen("/proc/self/statm", "r")
+            val sizePages = alloc<size_tVar>()
+            val residentPages = alloc<size_tVar>()
+            if (fscanf(file, "%lu %lu", sizePages.ptr, residentPages.ptr) != 2) return@memScoped Memory.UNKNOWN
+            fclose(file)
+            residentPages.value.toLong() * pageSize
+        }
 }
