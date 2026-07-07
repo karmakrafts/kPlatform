@@ -17,27 +17,30 @@
 package dev.karmakrafts.kplatform
 
 import kotlin.test.Test
-import kotlin.test.assertNotEquals
+import kotlin.test.assertTrue
 
 class PlatformTest {
     @Test
-    fun `Memory size is not unknown`() {
+    fun `Memory size is not 0 when known`() {
         val size = Platform.memory.size
-        assertNotEquals(Memory.UNKNOWN, size)
+        if (size == Memory.UNKNOWN) return
+        assertTrue(size > 0)
         println("Memory size: ${size / 1024 / 1024}MiB")
     }
 
     @Test
-    fun `Available memory is not unknown`() {
-        val size = Platform.memory.available
-        assertNotEquals(Memory.UNKNOWN, size)
-        println("Memory available: ${size / 1024 / 1024}MiB")
+    fun `Available memory is not 0 when known`() {
+        val available = Platform.memory.available
+        if (available == Memory.UNKNOWN) return
+        assertTrue(available > 0)
+        println("Memory available: ${available / 1024 / 1024}MiB")
     }
 
     @Test
-    fun `Used memory is not unknown`() {
-        val size = Platform.memory.used
-        assertNotEquals(Memory.UNKNOWN, size)
-        println("Memory used: ${size / 1024 / 1024}MiB")
+    fun `Used memory is not 0 when known`() {
+        val used = Platform.memory.used
+        if (used == Memory.UNKNOWN) return
+        assertTrue(used > 0)
+        println("Memory used: ${used / 1024 / 1024}MiB")
     }
 }

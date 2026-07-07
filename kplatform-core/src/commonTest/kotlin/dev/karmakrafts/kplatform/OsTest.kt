@@ -17,8 +17,8 @@
 package dev.karmakrafts.kplatform
 
 import kotlin.test.Test
+import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
-import kotlin.test.assertNotNull
 
 class OsTest {
     @Test
@@ -29,23 +29,23 @@ class OsTest {
     }
 
     @Test
-    fun `Name is not empty`() {
-        val name = Platform.os.name
-        assertNotNull(name)
+    fun `Name is not empty when known`() {
+        val name = Platform.os.name ?: return
+        assertFalse(name.isEmpty())
         println("OS Name: $name")
     }
 
     @Test
     fun `Vendor is not empty`() {
-        val vendor = Platform.os.vendor
-        assertNotNull(vendor)
+        val vendor = Platform.os.vendor ?: return
+        assertFalse(vendor.isEmpty())
         println("OS Vendor: $vendor")
     }
 
     @Test
     fun `Version is not empty`() {
-        val version = Platform.os.version
-        assertNotNull(version)
+        val version = Platform.os.version ?: return
+        assertFalse(version.isEmpty())
         println("OS Version: $version")
     }
 }

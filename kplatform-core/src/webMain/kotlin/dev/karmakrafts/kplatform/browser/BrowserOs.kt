@@ -18,7 +18,6 @@ package dev.karmakrafts.kplatform.browser
 
 import dev.karmakrafts.kplatform.Os
 import dev.karmakrafts.kplatform.OsFamily
-import dev.karmakrafts.kplatform.node.NodeOs
 import web.navigator.navigator
 
 internal object BrowserOs : Os {
@@ -47,9 +46,10 @@ internal object BrowserOs : Os {
 
     override val vendor: String? by lazy {
         when {
-            NodeOs.family == OsFamily.WINDOWS -> "Microsoft"
-            NodeOs.family == OsFamily.ANDROID -> "Google"
-            NodeOs.family.isApple -> "Apple"
+            family == OsFamily.WINDOWS -> "Microsoft"
+            family == OsFamily.ANDROID -> "Google"
+            family == OsFamily.LINUX -> "GNU/Linux"
+            family.isApple -> "Apple"
             else -> null
         }
     }

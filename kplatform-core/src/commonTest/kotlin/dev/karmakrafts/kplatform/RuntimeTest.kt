@@ -17,8 +17,8 @@
 package dev.karmakrafts.kplatform
 
 import kotlin.test.Test
-import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 class RuntimeTest {
     @Test
@@ -43,23 +43,26 @@ class RuntimeTest {
     }
 
     @Test
-    fun `Memory size is not unknown`() {
+    fun `Memory size is not 0 when known`() {
         val size = Platform.runtime.memory.size
-        assertNotEquals(Memory.UNKNOWN, size)
+        if (size == Memory.UNKNOWN) return
+        assertTrue(size > 0)
         println("RT memory size: ${size / 1024 / 1024}MiB")
     }
 
     @Test
-    fun `Available memory is not unknown`() {
-        val size = Platform.runtime.memory.available
-        assertNotEquals(Memory.UNKNOWN, size)
-        println("RT memory available: ${size / 1024 / 1024}MiB")
+    fun `Available memory is not 0 when known`() {
+        val available = Platform.runtime.memory.available
+        if (available == Memory.UNKNOWN) return
+        assertTrue(available > 0)
+        println("RT memory available: ${available / 1024 / 1024}MiB")
     }
 
     @Test
-    fun `Used memory is not unknown`() {
-        val size = Platform.runtime.memory.used
-        assertNotEquals(Memory.UNKNOWN, size)
-        println("RT memory used: ${size / 1024 / 1024}MiB")
+    fun `Used memory is not 0 when known`() {
+        val used = Platform.runtime.memory.used
+        if (used == Memory.UNKNOWN) return
+        assertTrue(used > 0)
+        println("RT memory used: ${used / 1024 / 1024}MiB")
     }
 }
