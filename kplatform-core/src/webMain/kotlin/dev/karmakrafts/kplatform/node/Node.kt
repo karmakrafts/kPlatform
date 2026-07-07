@@ -21,6 +21,7 @@ package dev.karmakrafts.kplatform.node
 import js.numbers.UInt53
 import kotlin.js.ExperimentalWasmJsInterop
 import kotlin.js.JsAny
+import kotlin.js.js
 
 internal external interface ProcessVersions : JsAny {
     val node: String
@@ -34,15 +35,18 @@ internal external interface ProcessMemoryUsage : JsAny {
 
 internal external interface Process : JsAny {
     val versions: ProcessVersions
-    val memoryUsage: ProcessMemoryUsage
     val env: JsAny
-}
 
-internal external interface Os : JsAny {
-    val platform: String?
-    val release: String?
-    val type: String?
+    fun memoryUsage(): ProcessMemoryUsage
 }
 
 internal external val process: Process
-internal external val os: Os
+
+internal external interface Os : JsAny {
+    fun platform(): String?
+    fun release(): String?
+    fun type(): String?
+}
+
+private fun requireOs(): Os = js("""require('os')""")
+internal val os: Os by lazy(::requireOs)

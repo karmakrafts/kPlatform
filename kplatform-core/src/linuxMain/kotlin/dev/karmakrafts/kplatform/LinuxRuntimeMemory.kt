@@ -20,16 +20,25 @@ import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.alloc
 import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.ptr
-import platform.linux.RUSAGE_SELF
-import platform.linux.getrusage
-import platform.linux.rusage
+import kotlinx.cinterop.value
+import platform.posix._SC_PAGESIZE
+import platform.posix.fclose
+import platform.posix.fopen
+import platform.posix.fscanf
+import platform.posix.size_tVar
+import platform.posix.sysconf
 
 @OptIn(ExperimentalForeignApi::class)
 internal object LinuxRuntimeMemory : Memory by LinuxGlobalMemory {
+    private val pageSize: Long by lazy { sysconf(_SC_PAGESIZE) }
+
     override val used: Long
         get() = memScoped {
-            val usage = alloc<rusage>()
-            getrusage(RUSAGE_SELF, usage.ptr)
-            usage.ru_maxrss * 1000L // This is reported is kB
+            val file = fopen("/proc/self/statm", "r")
+            val sizePages = alloc<size_tVar>()
+            val residentPages = alloc<size_tVar>()
+            if (fscanf(file, "%lu %lu", sizePages.ptr, residentPages.ptr) != 2) return@memScoped Memory.UNKNOWN
+            fclose(file)
+            residentPages.value.toLong() * pageSize
         }
 }

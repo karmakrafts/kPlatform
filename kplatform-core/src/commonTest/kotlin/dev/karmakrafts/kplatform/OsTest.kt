@@ -23,6 +23,7 @@ import kotlin.test.assertNotEquals
 class OsTest {
     @Test
     fun `Family is not unknown`() {
+        if (Platform.runtime.type == RuntimeType.WASI) return // WASI can't know its own host
         val family = Platform.os.family
         assertNotEquals(OsFamily.UNKNOWN, family)
         println("OS Family: $family")

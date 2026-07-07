@@ -43,7 +43,7 @@ internal external interface LegacyMemoryInfo : JsAny {
 }
 
 internal external interface LegacyPerformance : JsAny {
-    val memory: LegacyMemoryInfo
+    val memory: LegacyMemoryInfo?
 }
 
 internal val Navigator.isExt: Boolean by lazy(::hasExtendedNavigator)

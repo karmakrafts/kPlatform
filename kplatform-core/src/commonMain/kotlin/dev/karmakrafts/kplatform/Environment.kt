@@ -37,6 +37,9 @@ value class Environment internal constructor(val vars: Map<String, String?>) {
     inline operator fun get(key: String, default: () -> String): String = vars[key] ?: default()
 
     @Suppress("NOTHING_TO_INLINE")
+    inline operator fun contains(key: String): Boolean = key in vars
+
+    @Suppress("NOTHING_TO_INLINE")
     inline fun getBooleanOrNull(key: String): Boolean? = vars[key]?.toBooleanStrictOrNull()
 
     @Suppress("NOTHING_TO_INLINE")
@@ -57,9 +60,13 @@ value class Environment internal constructor(val vars: Map<String, String?>) {
     }
 
     inline fun getBoolean(key: String, default: () -> Boolean): Boolean = getBooleanOrNull(key) ?: default()
+
     inline fun getInt(key: String, default: () -> Int): Int = getIntOrNull(key) ?: default()
+
     inline fun getLong(key: String, default: () -> Long): Long = getLongOrNull(key) ?: default()
+
     inline fun getFloat(key: String, default: () -> Float): Float = getFloatOrNull(key) ?: default()
+
     inline fun getDouble(key: String, default: () -> Double): Double = getDoubleOrNull(key) ?: default()
 
     inline fun <E : Enum<E>> getEnum(key: String, entries: EnumEntries<E>, default: () -> E): E =

@@ -19,7 +19,7 @@ package dev.karmakrafts.kplatform.node
 import dev.karmakrafts.kplatform.Memory
 
 internal object NodeMemory : Memory {
-    override val size: Long by lazy { process.memoryUsage.rss.toLong() }
-    override val available: Long get() = process.memoryUsage.heapTotal.toLong()
-    override val used: Long get() = process.memoryUsage.heapUsed.toLong()
+    override val size: Long by lazy { process.memoryUsage().rss.toLong() }
+    override val available: Long get() = process.memoryUsage().heapTotal.toLong()
+    override val used: Long get() = process.memoryUsage().heapUsed.toLong()
 }

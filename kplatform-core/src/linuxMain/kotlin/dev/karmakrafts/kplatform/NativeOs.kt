@@ -14,7 +14,22 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalForeignApi::class)
+
 package dev.karmakrafts.kplatform
 
-internal actual fun getKernelVersion(): String? = "Unknown" // TODO
-internal actual fun getKernelVendor(): String? = "Unknown" // TODO
+import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.alloc
+import kotlinx.cinterop.memScoped
+import kotlinx.cinterop.ptr
+import kotlinx.cinterop.toKStringFromUtf8
+import platform.posix.uname
+import platform.posix.utsname
+
+internal actual fun getKernelVersion(): String? = memScoped {
+    val uname = alloc<utsname>()
+    if (uname(uname.ptr) != 0) return@memScoped null
+    uname.version.toKStringFromUtf8()
+}
+
+internal actual fun getKernelVendor(): String? = "GNU/Linux"

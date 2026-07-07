@@ -65,10 +65,9 @@ kotlin {
     }
     withJvm()
     withWeb {
-        withBrowser {
-            useEsModules()
-        }
+        withBrowser()
         withNodeJs()
+        useCommonJs()
     }
     withWasmWasi {
         withNodeJs()

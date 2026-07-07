@@ -21,7 +21,7 @@ import dev.karmakrafts.kplatform.OsFamily
 
 internal object NodeOs : Os {
     override val family: OsFamily by lazy {
-        val platform = os.platform?.lowercase() ?: return@lazy OsFamily.UNKNOWN
+        val platform = os.platform()?.lowercase() ?: return@lazy OsFamily.UNKNOWN
         when {
             "win32" in platform || "windows" in platform -> OsFamily.WINDOWS
             "linux" in platform -> OsFamily.LINUX
@@ -32,8 +32,8 @@ internal object NodeOs : Os {
         }
     }
 
-    override val name: String? get() = os.type
-    override val version: String? get() = os.release
+    override val name: String? get() = os.type()
+    override val version: String? get() = os.release()
 
     override val vendor: String? by lazy {
         when {
