@@ -16,4 +16,28 @@
 
 package dev.karmakrafts.kplatform
 
-internal object AppleRuntimeMemory : Memory by AppleGlobalMemory
+import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.UnsafeNumber
+import kotlinx.cinterop.alloc
+import kotlinx.cinterop.convert
+import kotlinx.cinterop.interpretCPointer
+import kotlinx.cinterop.memScoped
+import kotlinx.cinterop.ptr
+import kotlinx.cinterop.value
+import platform.darwin.MACH_TASK_BASIC_INFO
+import platform.darwin.MACH_TASK_BASIC_INFO_COUNT
+import platform.darwin.mach_msg_type_number_tVar
+import platform.darwin.mach_task_basic_info
+import platform.darwin.mach_task_self_
+import platform.darwin.task_info
+
+@OptIn(ExperimentalForeignApi::class, UnsafeNumber::class)
+internal object AppleRuntimeMemory : Memory by AppleGlobalMemory {
+    override val used: Long
+        get() = memScoped {
+            val info = alloc<mach_task_basic_info>()
+            val count = alloc<mach_msg_type_number_tVar> { value = MACH_TASK_BASIC_INFO_COUNT.convert() }
+            task_info(mach_task_self_, MACH_TASK_BASIC_INFO.toUInt(), interpretCPointer(info.rawPtr), count.ptr)
+            info.resident_size.toLong()
+        }
+}

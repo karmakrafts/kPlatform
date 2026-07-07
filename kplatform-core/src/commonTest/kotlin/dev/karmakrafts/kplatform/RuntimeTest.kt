@@ -65,4 +65,11 @@ class RuntimeTest {
         assertTrue(used > 0)
         println("RT memory used: ${used / 1024 / 1024}MiB")
     }
+
+    @Test
+    fun `Iterate over environment`() {
+        for((key, value) in Platform.runtime.environment.vars) {
+            println("RT environment variable $key: ${value ?: "(no value)"}")
+        }
+    }
 }

@@ -53,15 +53,15 @@ kotlin {
     withSourcesJar()
     withAndroidLibrary("$group.core")
     withNative {
-        //if (konanTarget.family.isAppleFamily) {
-        //    compilations {
-        //        named("main") {
-        //            cinterops {
-        //                create("platform")
-        //            }
-        //        }
-        //    }
-        //}
+        if (konanTarget.family.isAppleFamily) {
+            compilations {
+                named("main") {
+                    cinterops {
+                        create("platform")
+                    }
+                }
+            }
+        }
     }
     withJvm()
     withWeb {

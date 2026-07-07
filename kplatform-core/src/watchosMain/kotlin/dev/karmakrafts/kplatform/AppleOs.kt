@@ -16,22 +16,4 @@
 
 package dev.karmakrafts.kplatform
 
-import kotlinx.cinterop.ExperimentalForeignApi
-import kotlinx.cinterop.UnsafeNumber
-
-internal expect val osFamily: OsFamily
-
-@OptIn(ExperimentalForeignApi::class, UnsafeNumber::class)
-object AppleOs : Os {
-    override val family: OsFamily get() = osFamily
-
-    override val name: String? by lazy {
-        when (family) {
-            OsFamily.UNKNOWN -> null
-            else -> family.displayName
-        }
-    }
-
-    override val version: String? by lazy { Sysctl.string(Sysctl.KERN_OSPRODUCTVERSION) }
-    override val vendor: String = "Apple"
-}
+internal actual val osFamily: OsFamily = OsFamily.WATCHOS
