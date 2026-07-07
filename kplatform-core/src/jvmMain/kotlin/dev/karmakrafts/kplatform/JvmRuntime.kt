@@ -18,12 +18,19 @@ package dev.karmakrafts.kplatform
 
 internal object JvmRuntime : Runtime {
     override val type: RuntimeType = RuntimeType.JVM
-    override val name: String
-        get() = TODO("Not yet implemented")
-    override val vendor: String
-        get() = TODO("Not yet implemented")
-    override val version: String
-        get() = TODO("Not yet implemented")
+
+    override val name: String? by lazy {
+        System.getProperty("java.runtime.name") ?: System.getProperty("java.vm.name")
+    }
+
+    override val vendor: String? by lazy {
+        System.getProperty("java.vendor") ?: System.getProperty("java.vm.vendor")
+    }
+
+    override val version: String? by lazy {
+        System.getProperty("java.runtime.version") ?: System.getProperty("java.vm.version")
+    }
+
     override val memory: Memory get() = OshiRuntimeMemory
     override val environment: Environment = Environment(System.getenv())
 }

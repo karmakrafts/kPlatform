@@ -28,10 +28,7 @@ internal object JvmOs : Os {
         }
     }
 
-    override val name: String
-        get() = TODO("Not yet implemented")
-    override val version: String
-        get() = TODO("Not yet implemented")
-    override val vendor: String
-        get() = TODO("Not yet implemented")
+    override val name: String? get() = systemInfo.operatingSystem.family
+    override val version: String? get() = systemInfo.operatingSystem.versionInfo?.version
+    override val vendor: String? get() = systemInfo.operatingSystem.manufacturer
 }

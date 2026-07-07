@@ -21,7 +21,11 @@ internal object AndroidRuntime : Runtime {
     override val type: RuntimeType = RuntimeType.ART
     override val name: String = "ART"
     override val vendor: String = "Google"
-    override val version: String by lazy { System.getProperty("java.vm.version") ?: "Unknown" }
+
+    override val version: String? by lazy {
+        System.getProperty("java.runtime.version") ?: System.getProperty("java.vm.version")
+    }
+
     override val memory: Memory get() = OshiRuntimeMemory
     override val environment: Environment = Environment(System.getenv())
 }

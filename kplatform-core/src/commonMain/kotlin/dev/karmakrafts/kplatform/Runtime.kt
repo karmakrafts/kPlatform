@@ -28,17 +28,17 @@ interface Runtime {
     /**
      * The name of the runtime of the current process.
      */
-    val name: String
+    val name: String?
 
     /**
      * The vendor name of the runtime of the current process.
      */
-    val vendor: String
+    val vendor: String?
 
     /**
      * The version of the runtime of the current process.
      */
-    val version: String
+    val version: String?
 
     /**
      * Memory information about the current process.
