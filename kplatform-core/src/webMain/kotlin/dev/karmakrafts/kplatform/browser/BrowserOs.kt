@@ -28,8 +28,8 @@ internal object BrowserOs : Os {
             "linux" in platform -> OsFamily.LINUX
             "tvos" in platform -> OsFamily.TVOS
             "watchos" in platform -> OsFamily.WATCHOS
-            "ios" in platform || "iphoneos" in platform -> OsFamily.IOS
-            "darwin" in platform || "macos" in platform || "osx" in platform -> OsFamily.MACOS
+            "ios" in platform || "iphone" in platform -> OsFamily.IOS
+            "darwin" in platform || "mac" in platform || "osx" in platform -> OsFamily.MACOS
             "freebsd" in platform || "openbsd" in platform -> OsFamily.BSD
             else -> OsFamily.UNKNOWN
         }
