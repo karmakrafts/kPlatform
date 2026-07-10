@@ -16,6 +16,11 @@
 
 package dev.karmakrafts.kplatform
 
+/**
+ * Represents operating system families.
+ *
+ * @param displayName The user-friendly display name of the operating system family.
+ */
 enum class OsFamily(val displayName: String) {
     // @formatter:off
     WINDOWS("Windows"),
@@ -29,15 +34,27 @@ enum class OsFamily(val displayName: String) {
     UNKNOWN("Unknown"); // Safe fallback value for JVM platforms we don't list here
     // @formatter:on
 
+    /**
+     * Indicates whether this family belongs to an Apple operating system.
+     */
     val isApple: Boolean
         get() = this == MACOS || this == IOS || this == WATCHOS || this == TVOS
 
+    /**
+     * Indicates whether this family belongs to a mobile operating system.
+     */
     val isMobile: Boolean
         get() = this == ANDROID || this == WATCHOS || this == IOS
 
+    /**
+     * Indicates whether this family belongs to a Unix-like operating system.
+     */
     val isUnixoid: Boolean
         get() = this == LINUX || this == BSD || this == ANDROID
 
+    /**
+     * Indicates whether this family generally exposes a POSIX-style environment.
+     */
     val isPosix: Boolean
         get() = isApple || isUnixoid
 }

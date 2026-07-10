@@ -24,9 +24,15 @@ import dev.karmakrafts.kplatform.Memory.Companion.UNKNOWN
  */
 interface Memory {
     companion object {
+        /**
+         * Sentinel value used when a memory metric is not supported.
+         */
         const val UNKNOWN: Long = -1
     }
 
+    /**
+     * Represents unavailable memory information.
+     */
     object Unknown : Memory {
         override val size: Long = UNKNOWN
         override val available: Long = UNKNOWN

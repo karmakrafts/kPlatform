@@ -16,6 +16,9 @@
 
 package dev.karmakrafts.kplatform
 
+/**
+ * Provides platform-wide information about the current process environment.
+ */
 expect object Platform {
     /**
      * Information about the operating system.

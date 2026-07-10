@@ -16,6 +16,9 @@
 
 package dev.karmakrafts.kplatform
 
+/**
+ * Represents runtime families supported by this library.
+ */
 enum class RuntimeType {
     // @formatter:off
     ART,

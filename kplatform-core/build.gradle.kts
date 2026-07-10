@@ -103,13 +103,6 @@ tasks {
     withType<KotlinJvmTest>().configureEach {
         jvmArgs("-Xms2G", "-Xmx2G")
     }
-    register("generateVersionSource") {
-        group = "source"
-        description = "Generate a Kotlin file with the current Kotlin version for native runtime information"
-        doLast {
-
-        }
-    }
 }
 
 publishing {

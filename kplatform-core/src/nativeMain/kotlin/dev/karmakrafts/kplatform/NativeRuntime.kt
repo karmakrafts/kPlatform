@@ -26,6 +26,13 @@ import kotlinx.cinterop.get
 import kotlinx.cinterop.toKStringFromUtf8
 
 internal abstract class NativeRuntime : Runtime {
+    companion object {
+        private fun String.cleanValue(): String = when {
+            startsWith('"') && endsWith('"') -> substringAfter('"').substringBeforeLast('"')
+            else -> this
+        }
+    }
+
     override val type: RuntimeType get() = RuntimeType.NATIVE
     override val name: String = "Kotlin/Native"
     override val version: String = "2.4.0"
@@ -41,9 +48,9 @@ internal abstract class NativeRuntime : Runtime {
             var envVar = envAddr[index++]
             while (envVar != null) {
                 val varString = envVar.toKStringFromUtf8()
-                val splitVar = varString.split("=")
+                val splitVar = varString.split("=", limit = 2)
                 if (splitVar.size == 1) this[splitVar[0]] = null
-                else this[splitVar[0]] = splitVar[1]
+                else this[splitVar[0]] = splitVar[1].cleanValue()
                 envVar = envAddr[index++]
             }
         }
