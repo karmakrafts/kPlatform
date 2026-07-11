@@ -139,7 +139,7 @@ test:linux:
     - *if-merge-request
     - *if-main
   script:
-    - gradle linuxX64Test jvmTest
+    - ./gradlew linuxX64Test jvmTest
   tags:
     - linux
     - shell
