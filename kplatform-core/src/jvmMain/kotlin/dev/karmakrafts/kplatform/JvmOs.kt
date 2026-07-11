@@ -24,6 +24,7 @@ internal object JvmOs : Os {
             PlatformEnum.WINDOWS, PlatformEnum.WINDOWSCE -> OsFamily.WINDOWS
             PlatformEnum.LINUX -> OsFamily.LINUX
             PlatformEnum.ANDROID -> OsFamily.ANDROID
+            PlatformEnum.MACOS -> OsFamily.MACOS
             else -> OsFamily.UNKNOWN
         }
     }
