@@ -39,6 +39,7 @@ internal object NodeOs : Os {
         when {
             family == OsFamily.WINDOWS -> "Microsoft"
             family == OsFamily.ANDROID -> "Google"
+            family == OsFamily.LINUX -> "Linux/GNU"
             family.isApple -> "Apple"
             else -> null
         }

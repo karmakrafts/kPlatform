@@ -65,9 +65,19 @@ kotlin {
     }
     withJvm()
     withWeb {
-        withBrowser()
+        compilerOptions {
+            target = "es2015"
+        }
+        useEsModules()
+        withBrowser {
+            testTask {
+                useKarma {
+                    useFirefoxHeadless()
+                    useConfigDirectory(rootProject.projectDir.resolve("karma.config.d"))
+                }
+            }
+        }
         withNodeJs()
-        useCommonJs()
     }
     withWasmWasi {
         withNodeJs()

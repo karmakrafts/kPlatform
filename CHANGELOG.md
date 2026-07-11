@@ -1,5 +1,14 @@
 ## [Unreleased]
 
+### Fixed
+
+- Linux having no vendor string when running under NodeJS
+
+### Changed
+
+- Switched Kotlin/JS from CommonJS to ES modules
+- Enabled ES2015 target for Kotlin/JS
+
 ## [1.0.1]
 
 ### Changed

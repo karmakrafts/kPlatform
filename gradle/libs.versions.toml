@@ -3,17 +3,12 @@
 java = "17"
 
 androidGradle = "9.2.1" # https://developer.android.com/reference/tools/gradle-api
-kplatform = "1.0.1"
+kplatform = "1.1.0"
 kotlin = "2.4.0" # https://github.com/JetBrains/kotlin/releases
 kotlinBrowser = "2026.7.1" # https://github.com/JetBrains/kotlin-wrappers/releases
 dokka = "2.2.0" # https://github.com/Kotlin/dokka/releases
 karmaConventions = "1.18.3" # https://github.com/karmakrafts/karma-conventions/tags
 oshi = "7.4.0" # https://github.com/oshi/oshi/releases
-
-# karbide-benchmarks
-
-kotlinxBenchmark = "0.4.17" # https://github.com/Kotlin/kotlinx-benchmark/releases
-jmh = "1.37" # https://github.com/openjdk/jmh/tags
 
 [libraries]
 
@@ -21,18 +16,9 @@ kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotl
 kotlin-wrappers-browser = { module = "org.jetbrains.kotlin-wrappers:kotlin-browser", version.ref = "kotlinBrowser" }
 oshi-core = { module = "com.github.oshi:oshi-core", version.ref = "oshi" }
 
-# karbide-benchmarks
-
-kotlinx-benchmark-runtime = { module = "org.jetbrains.kotlinx:kotlinx-benchmark-runtime", version.ref = "kotlinxBenchmark" }
-jmh-core = { module = "org.openjdk.jmh:jmh-core", version.ref = "jmh" }
-
 [plugins]
 
 android-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "androidGradle" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 karmaConventions = { id = "dev.karmakrafts.conventions.karma-conventions", version.ref = "karmaConventions" }
-
-# karbide-benchmarks
-
-kotlinx-benchmark = { id = "org.jetbrains.kotlinx.benchmark", version.ref = "kotlinxBenchmark" }
