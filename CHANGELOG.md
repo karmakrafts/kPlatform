@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [1.0.1]
+
 ### Changed
 
 - Run unit tests on all available platform in CI
