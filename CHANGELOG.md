@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [1.1.0]
+
 ### Fixed
 
 - Linux having no vendor string when running under NodeJS
