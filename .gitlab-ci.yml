@@ -72,7 +72,7 @@ update_changelog:
       git config user.email "kodeebot@karmakrafts.dev"
       git add CHANGELOG.md
       git commit -m "[skip-ci] Update changelog for next release"
-      git push https://gitlab-ci-token:${CI_PUSH_TOKEN}@git.karmakrafts.dev/kk/karbide.git
+      git push https://gitlab-ci-token:${CI_PUSH_TOKEN}@git.karmakrafts.dev/kk/kPlatform.git
       cd ..
       rm -rf update-changelog
   tags:
