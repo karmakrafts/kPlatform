@@ -25,6 +25,7 @@ import kotlinx.cinterop.ptr
 import kotlinx.cinterop.value
 import platform.darwin.HOST_VM_INFO64
 import platform.darwin.HOST_VM_INFO64_COUNT
+import platform.darwin.KERN_SUCCESS
 import platform.darwin.host_page_size
 import platform.darwin.host_statistics64
 import platform.darwin.mach_host_self
@@ -45,21 +46,21 @@ internal object AppleGlobalMemory : Memory {
 
     override val size: Long by lazy { Sysctl.uLong(Sysctl.HW_MEMSIZE)?.toLong() ?: Memory.UNKNOWN }
 
-    override val available: Long
-        get() = memScoped {
-            val host = mach_host_self()
-            val stat = alloc<vm_statistics64_data_t>()
-            val count = alloc<mach_msg_type_number_tVar> { value = HOST_VM_INFO64_COUNT }
-            host_statistics64(host, HOST_VM_INFO64, interpretCPointer(stat.rawPtr), count.ptr)
-            stat.free_count.toLong() * pageSize
+    private inline fun <R> withHostStats(block: (vm_statistics64_data_t) -> R): R? = memScoped {
+        val host = mach_host_self()
+        val stats = alloc<vm_statistics64_data_t>()
+        val count = alloc<mach_msg_type_number_tVar> { value = HOST_VM_INFO64_COUNT }
+        if (host_statistics64(host, HOST_VM_INFO64, interpretCPointer(stats.rawPtr), count.ptr) != KERN_SUCCESS) {
+            return@memScoped null
         }
+        return@memScoped block(stats)
+    }
+
+    override val available: Long
+        get() = withHostStats { stats -> stats.free_count.toLong() * pageSize } ?: Memory.UNKNOWN
 
     override val used: Long
-        get() = memScoped {
-            val host = mach_host_self()
-            val stat = alloc<vm_statistics64_data_t>()
-            val count = alloc<mach_msg_type_number_tVar> { value = HOST_VM_INFO64_COUNT }
-            host_statistics64(host, HOST_VM_INFO64, interpretCPointer(stat.rawPtr), count.ptr)
-            (stat.active_count + stat.inactive_count + stat.wire_count + stat.compressor_page_count).toLong() * pageSize
-        }
+        get() = withHostStats { stats ->
+            (stats.active_count + stats.inactive_count + stats.wire_count + stats.compressor_page_count).toLong() * pageSize
+        } ?: Memory.UNKNOWN
 }

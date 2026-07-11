@@ -7,6 +7,8 @@
 ### Fixed
 
 - Automatic changelog update in CI
+- `Platform.memory` being reported incorrectly on Windows
+- Error cases not being handled for `AppleGlobalMemory` and `AppleRuntimeMemory`
 
 ## [1.0.0]
 

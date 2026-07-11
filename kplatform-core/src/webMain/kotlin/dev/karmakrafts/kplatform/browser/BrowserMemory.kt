@@ -23,6 +23,8 @@ internal object BrowserMemory : Memory {
     override val used: Long get() = browserPerformance?.memory?.usedJSHeapSize?.toLong() ?: Memory.UNKNOWN
 
     override val available: Long
-        get() = if (size == Memory.UNKNOWN || used == Memory.UNKNOWN) Memory.UNKNOWN
-        else size - used
+        get() = when {
+            size == Memory.UNKNOWN || used == Memory.UNKNOWN -> Memory.UNKNOWN
+            else -> size - used
+        }
 }

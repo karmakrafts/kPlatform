@@ -46,5 +46,9 @@ internal object WindowsGlobalMemory : Memory {
             status.ullAvailPhys.toLong()
         }
 
-    override val used: Long get() = size - available
+    override val used: Long
+        get() = when {
+            size == Memory.UNKNOWN || available == Memory.UNKNOWN -> Memory.UNKNOWN
+            else -> size - available
+        }
 }
