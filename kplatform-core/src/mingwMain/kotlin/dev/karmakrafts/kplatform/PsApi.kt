@@ -34,14 +34,14 @@ import platform.windows.BOOL
 import platform.windows.CloseHandle
 import platform.windows.DWORD
 import platform.windows.DWORDVar
-import platform.windows.GetModuleHandleW
 import platform.windows.GetProcAddress
 import platform.windows.HANDLE
 import platform.windows.HMODULE
+import platform.windows.LoadLibraryW
 import platform.windows.SIZE_T
 import platform.windows.SIZE_TVar
 
-internal object Kernel32 {
+internal object PsApi {
     // See https://learn.microsoft.com/en-us/windows/win32/api/psapi/ns-psapi-process_memory_counters_ex
     class ProcessMemoryCountersEx(rawPtr: NativePtr) : CStructVar(rawPtr) {
         @Suppress("DEPRECATION")
@@ -57,16 +57,16 @@ internal object Kernel32 {
     // See https://learn.microsoft.com/en-us/windows/win32/api/psapi/nf-psapi-getprocessmemoryinfo
     private typealias _GetProcessMemoryInfo = (process: HANDLE, memCounters: CPointer<ProcessMemoryCountersEx>, cb: DWORD) -> BOOL
 
-    private val kernelModule: HMODULE? = GetModuleHandleW("kernel32.dll")
+    private val psApiModule: HMODULE? = LoadLibraryW("PsApi.dll") ?: LoadLibraryW("Kernel32.dll")
 
-    val GetProcessMemoryInfo: CPointer<CFunction<_GetProcessMemoryInfo>>? = kernelModule?.let { module ->
+    val GetProcessMemoryInfo: CPointer<CFunction<_GetProcessMemoryInfo>>? = psApiModule?.let { module ->
         GetProcAddress(module, "GetProcessMemoryInfo")?.reinterpret()
     }
 
     init {
         atexit(staticCFunction<Unit> {
-            val self = Kernel32
-            self.kernelModule?.let(::CloseHandle)
+            val self = PsApi
+            self.psApiModule?.let(::CloseHandle)
         })
     }
 }

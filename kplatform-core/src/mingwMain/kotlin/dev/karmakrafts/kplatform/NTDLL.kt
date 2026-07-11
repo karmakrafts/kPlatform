@@ -26,15 +26,15 @@ import kotlinx.cinterop.staticCFunction
 import platform.posix.atexit
 import platform.windows.CloseHandle
 import platform.windows.DWORDVar
-import platform.windows.GetModuleHandleW
 import platform.windows.GetProcAddress
 import platform.windows.HMODULE
+import platform.windows.LoadLibraryW
 
 internal object NTDLL {
     // See https://www.geoffchappell.com/studies/windows/win32/ntdll/api/ldrinit/getntversionnumbers.htm?tx=45,52,56,71,76,84;50
     private typealias _RtlGetNtVersionNumbers = (major: CPointer<DWORDVar>, minor: CPointer<DWORDVar>, build: CPointer<DWORDVar>) -> Unit
 
-    private val ntdllModule: HMODULE? = GetModuleHandleW("ntdll.dll")
+    private val ntdllModule: HMODULE? = LoadLibraryW("NTDLL.dll")
 
     val RtlGetNtVersionNumbers: CPointer<CFunction<_RtlGetNtVersionNumbers>>? = ntdllModule?.let { module ->
         GetProcAddress(module, "RtlGetNtVersionNumbers")?.reinterpret()

@@ -18,8 +18,10 @@ package dev.karmakrafts.kplatform
 
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.alloc
+import kotlinx.cinterop.convert
 import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.ptr
+import kotlinx.cinterop.sizeOf
 import platform.windows.GlobalMemoryStatusEx
 import platform.windows.MEMORYSTATUSEX
 
@@ -27,7 +29,9 @@ import platform.windows.MEMORYSTATUSEX
 internal object WindowsGlobalMemory : Memory {
     override val size: Long by lazy {
         memScoped {
-            val status = alloc<MEMORYSTATUSEX>()
+            val status = alloc<MEMORYSTATUSEX> {
+                dwLength = sizeOf<MEMORYSTATUSEX>().convert()
+            }
             if (GlobalMemoryStatusEx(status.ptr) == 0) return@memScoped Memory.UNKNOWN
             status.ullTotalPhys.toLong()
         }
@@ -35,7 +39,9 @@ internal object WindowsGlobalMemory : Memory {
 
     override val available: Long
         get() = memScoped {
-            val status = alloc<MEMORYSTATUSEX>()
+            val status = alloc<MEMORYSTATUSEX> {
+                dwLength = sizeOf<MEMORYSTATUSEX>().convert()
+            }
             if (GlobalMemoryStatusEx(status.ptr) == 0) return@memScoped Memory.UNKNOWN
             status.ullAvailPhys.toLong()
         }

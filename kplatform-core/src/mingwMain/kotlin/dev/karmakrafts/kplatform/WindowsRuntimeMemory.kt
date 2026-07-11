@@ -18,7 +18,7 @@
 
 package dev.karmakrafts.kplatform
 
-import dev.karmakrafts.kplatform.Kernel32.ProcessMemoryCountersEx
+import dev.karmakrafts.kplatform.PsApi.ProcessMemoryCountersEx
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.alloc
 import kotlinx.cinterop.convert
@@ -31,11 +31,11 @@ import platform.windows.GetCurrentProcess
 internal object WindowsRuntimeMemory : Memory by WindowsGlobalMemory {
     override val used: Long
         get() {
-            return if (Kernel32.GetProcessMemoryInfo == null) Memory.UNKNOWN
+            return if (PsApi.GetProcessMemoryInfo == null) Memory.UNKNOWN
             else memScoped {
                 val counters = alloc<ProcessMemoryCountersEx>()
                 val process = GetCurrentProcess() ?: return@memScoped Memory.UNKNOWN
-                if (Kernel32.GetProcessMemoryInfo(
+                if (PsApi.GetProcessMemoryInfo(
                         process, counters.ptr, sizeOf<ProcessMemoryCountersEx>().convert()
                     ) == 0
                 ) return@memScoped Memory.UNKNOWN
