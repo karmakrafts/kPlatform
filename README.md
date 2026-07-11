@@ -33,6 +33,7 @@ Currently, the API exposes the following information:
   * Name
   * Vendor 
   * Version
+  * Environment
   * Memory
     * Size
     * Available
