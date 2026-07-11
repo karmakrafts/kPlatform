@@ -8,8 +8,8 @@ workflow:
 
 stages:
   - check_changelog
-  - build
   - security
+  - test
   - publish
   - release
   - update_changelog
@@ -104,18 +104,70 @@ security:
   tags:
     - macos
 
-# ------------------------------ Build
+# ------------------------------ Tests
 
-build:
-  stage: build
+test:nodejs:
+  stage: test
   interruptible: true
   rules:
     - *if-merge-request
     - *if-main
   script:
-    - ./gradlew clean build --stacktrace
+    - ./gradlew jsNodeTest wasmJsNodeTest wasmWasiNodeTest
+  tags:
+    - linux
+    - shell
+    - amd64
+
+test:browser:
+  stage: test
+  interruptible: true
+  rules:
+    - *if-merge-request
+    - *if-main
+  script:
+    - ./gradlew jsBrowserTest wasmJsBrowserTest
+  tags:
+    - linux
+    - shell
+    - amd64
+
+test:linux:
+  stage: test
+  interruptible: true
+  rules:
+    - *if-merge-request
+    - *if-main
+  script:
+    - gradle linuxX64Test jvmTest
+  tags:
+    - linux
+    - shell
+    - amd64
+
+test:macos:
+  stage: test
+  interruptible: true
+  rules:
+    - *if-merge-request
+    - *if-main
+  script:
+    - ./gradlew macosArm64Test jvmTest
   tags:
     - macos
+    - arm64
+
+test:windows:
+  stage: test
+  interruptible: true
+  rules:
+    - *if-merge-request
+    - *if-main
+  script:
+    - ./gradlew mingwX64Test jvmTest
+  tags:
+    - windows
+    - amd64
 
 # ------------------------------ Publish
 

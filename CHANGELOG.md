@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Changed
+
+- Run unit tests on all available platform in CI
+
 ### Fixed
 
 - Automatic changelog update in CI
