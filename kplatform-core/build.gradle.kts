@@ -71,14 +71,7 @@ kotlin {
             target = "es2015"
         }
         useEsModules()
-        withBrowser {
-            testTask {
-                useKarma {
-                    useFirefoxHeadless()
-                    useConfigDirectory(rootProject.projectDir.resolve("karma.config.d"))
-                }
-            }
-        }
+        withBrowser()
         withNodeJs()
     }
     withWasmWasi {

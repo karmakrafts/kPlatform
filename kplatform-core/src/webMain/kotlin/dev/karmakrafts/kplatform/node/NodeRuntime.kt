@@ -27,7 +27,6 @@ import js.array.component2
 import js.array.iterator
 import js.objects.Object
 import js.string.JsStrings.toKotlinString
-import kotlin.js.ExperimentalWasmJsInterop
 
 internal object NodeRuntime : Runtime {
     override val type: RuntimeType get() = RuntimeType.NODEJS

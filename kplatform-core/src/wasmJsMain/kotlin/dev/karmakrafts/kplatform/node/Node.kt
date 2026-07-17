@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalWasmJsInterop::class)
+
 package dev.karmakrafts.kplatform.node
 
-@OptIn(ExperimentalWasmJsInterop::class)
-private fun getOs(): Os = js("""require('node:os')""")
+private fun getOs(): Os = js("""require('os')""")
 
-// FIXME: Can't use :: reference here since 2.4.10 because of compiler regression
-internal actual val os: Os by lazy { getOs() }
+internal actual val os: Os by lazy(::getOs)

@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalWasmJsInterop::class, ExperimentalStdlibApi::class)
+@file:OptIn(ExperimentalWasmJsInterop::class)
 
 package dev.karmakrafts.kplatform.node
 
 import js.numbers.UInt53
-import kotlin.js.ExperimentalWasmJsInterop
-import kotlin.js.JsAny
 
 internal external interface ProcessVersions : JsAny {
     val node: String
@@ -44,7 +42,9 @@ internal external interface Process : JsAny {
     fun memoryUsage(): ProcessMemoryUsage
 }
 
-internal external val process: Process
+private fun getProcess(): Process = js("""process""")
+
+internal val process: Process by lazy(::getProcess)
 
 internal external interface Os : JsAny {
     fun platform(): String?

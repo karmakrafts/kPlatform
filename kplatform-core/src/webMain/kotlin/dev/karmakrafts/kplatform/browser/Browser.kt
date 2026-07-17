@@ -42,12 +42,11 @@ internal external interface LegacyPerformance : JsAny {
     val memory: LegacyMemoryInfo?
 }
 
-// FIXME: Can't use :: reference here since 2.4.10 because of compiler regression
-internal val Navigator.isExt: Boolean by lazy { hasExtendedNavigator() }
+internal val Navigator.isExt: Boolean by lazy(::hasExtendedNavigator)
 
 // !! DO NOT REMOVE EXPLICIT TYPE, THIS CAUSES A COMPILER ISSUE !!
 // FIXME: fix this code when the compiler regression has been fixed
-internal inline val Navigator.ext: ExtNavigator get() = unsafeCast<ExtNavigator>()
+internal val Navigator.ext: ExtNavigator get() = unsafeCast<ExtNavigator>()
 
 internal val browserPerformance: LegacyPerformance? by lazy {
     if (!hasPerformance()) null

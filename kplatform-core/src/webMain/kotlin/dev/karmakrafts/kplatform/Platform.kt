@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalWasmJsInterop::class)
+
 package dev.karmakrafts.kplatform
 
 import dev.karmakrafts.kplatform.browser.BrowserMemory
@@ -22,14 +24,10 @@ import dev.karmakrafts.kplatform.browser.BrowserRuntime
 import dev.karmakrafts.kplatform.node.NodeMemory
 import dev.karmakrafts.kplatform.node.NodeOs
 import dev.karmakrafts.kplatform.node.NodeRuntime
-import kotlin.js.ExperimentalWasmJsInterop
-import kotlin.js.js
 
-@OptIn(ExperimentalWasmJsInterop::class)
-private fun checkIsNode(): Boolean = js("""typeof process !== 'undefined' && process.release.name === 'node'""")
+private fun checkIsNode(): Boolean = js("""'process' in globalThis && 'versions' in globalThis.process && 'node' in globalThis.process.versions""")
 
-// FIXME: Can't use :: reference here since 2.4.10 because of compiler regression
-private val isNode: Boolean by lazy { checkIsNode() }
+private val isNode: Boolean by lazy(::checkIsNode)
 
 actual object Platform {
     actual val runtime: Runtime = if (isNode) NodeRuntime else BrowserRuntime

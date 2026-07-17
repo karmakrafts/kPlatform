@@ -17,5 +17,5 @@
 package dev.karmakrafts.kplatform.node
 
 internal actual val os: Os by lazy {
-    process.mainModule.require("node:os")
+    process.mainModule.require("os")
 }
