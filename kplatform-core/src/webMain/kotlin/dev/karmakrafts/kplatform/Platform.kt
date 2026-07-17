@@ -28,9 +28,10 @@ import kotlin.js.js
 @OptIn(ExperimentalWasmJsInterop::class)
 private fun checkIsNode(): Boolean = js("""typeof process !== 'undefined' && process.release.name === 'node'""")
 
-actual object Platform {
-    private val isNode: Boolean by lazy(::checkIsNode)
+// FIXME: Can't use :: reference here since 2.4.10 because of compiler regression
+private val isNode: Boolean by lazy { checkIsNode() }
 
+actual object Platform {
     actual val runtime: Runtime = if (isNode) NodeRuntime else BrowserRuntime
     actual val os: Os = if (isNode) NodeOs else BrowserOs
     actual val memory: Memory = if (isNode) NodeMemory else BrowserMemory

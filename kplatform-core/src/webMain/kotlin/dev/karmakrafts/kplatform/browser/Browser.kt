@@ -20,10 +20,6 @@ package dev.karmakrafts.kplatform.browser
 
 import js.numbers.UInt53
 import web.navigator.Navigator
-import kotlin.js.ExperimentalWasmJsInterop
-import kotlin.js.JsAny
-import kotlin.js.js
-import kotlin.js.unsafeCast
 
 private fun hasPerformance(): Boolean = js("""'performance' in window""")
 private fun getPerformance(): LegacyPerformance = js("""window.performance""")
@@ -46,7 +42,8 @@ internal external interface LegacyPerformance : JsAny {
     val memory: LegacyMemoryInfo?
 }
 
-internal val Navigator.isExt: Boolean by lazy(::hasExtendedNavigator)
+// FIXME: Can't use :: reference here since 2.4.10 because of compiler regression
+internal val Navigator.isExt: Boolean by lazy { hasExtendedNavigator() }
 
 // !! DO NOT REMOVE EXPLICIT TYPE, THIS CAUSES A COMPILER ISSUE !!
 // FIXME: fix this code when the compiler regression has been fixed
