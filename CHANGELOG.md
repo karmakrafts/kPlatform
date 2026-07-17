@@ -1,5 +1,12 @@
 ## [Unreleased]
 
+### Changed
+
+- Updated to Kotlin 2.4.10
+- Updated to AGP 9.3.0
+- Updated to Karma Convention 1.19.0
+- Updated to Kotlin Wrappers 2026.7.2
+
 ## [1.1.0]
 
 ### Fixed
