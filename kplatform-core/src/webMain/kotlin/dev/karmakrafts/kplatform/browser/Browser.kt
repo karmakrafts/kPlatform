@@ -47,7 +47,10 @@ internal external interface LegacyPerformance : JsAny {
 }
 
 internal val Navigator.isExt: Boolean by lazy(::hasExtendedNavigator)
-internal inline val Navigator.ext: ExtNavigator get() = unsafeCast()
+
+// !! DO NOT REMOVE EXPLICIT TYPE, THIS CAUSES A COMPILER ISSUE !!
+// FIXME: fix this code when the compiler regression has been fixed
+internal inline val Navigator.ext: ExtNavigator get() = unsafeCast<ExtNavigator>()
 
 internal val browserPerformance: LegacyPerformance? by lazy {
     if (!hasPerformance()) null
