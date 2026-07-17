@@ -19,4 +19,5 @@ package dev.karmakrafts.kplatform.node
 @OptIn(ExperimentalWasmJsInterop::class)
 private fun getOs(): Os = js("""require('node:os')""")
 
-internal actual val os: Os by lazy(::getOs)
+// FIXME: Can't use :: reference here since 2.4.10 because of compiler regression
+internal actual val os: Os by lazy { getOs() }
