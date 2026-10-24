@@ -15,6 +15,10 @@
 - Updated to Dokka 2.3.0-Beta
 - Enabled ES2020 target for Kotlin/JS
 
+### Fixed
+
+- NPE in `AndroidOs` when running Android host tests
+
 ## [1.2.0]
 
 ### Changed
