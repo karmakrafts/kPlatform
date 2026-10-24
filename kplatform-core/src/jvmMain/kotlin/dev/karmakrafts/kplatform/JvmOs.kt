@@ -29,7 +29,7 @@ internal object JvmOs : Os {
         }
     }
 
-    override val name: String? get() = systemInfo.operatingSystem.family
-    override val version: String? get() = systemInfo.operatingSystem.versionInfo?.version
-    override val vendor: String? get() = systemInfo.operatingSystem.manufacturer
+    override val name: String get() = systemInfo.operatingSystem.family
+    override val version: String? get() = systemInfo.operatingSystem.versionInfo.version
+    override val vendor: String get() = systemInfo.operatingSystem.manufacturer
 }

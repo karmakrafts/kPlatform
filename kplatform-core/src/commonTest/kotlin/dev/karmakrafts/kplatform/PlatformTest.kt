@@ -21,7 +21,7 @@ import kotlin.test.assertTrue
 
 class PlatformTest {
     @Test
-    fun `Memory size is not 0 when known`() {
+    fun memorySizeIsNotZeroWhenKnown() {
         val size = Platform.memory.size
         if (size == Memory.UNKNOWN) return
         assertTrue(size > 0)
@@ -29,7 +29,7 @@ class PlatformTest {
     }
 
     @Test
-    fun `Available memory is not 0 when known`() {
+    fun availableMemoryIsNotZeroWhenKnown() {
         val available = Platform.memory.available
         if (available == Memory.UNKNOWN) return
         assertTrue(available > 0)
@@ -37,7 +37,7 @@ class PlatformTest {
     }
 
     @Test
-    fun `Used memory is not 0 when known`() {
+    fun usedMemoryIsNotZeroWhenKnown() {
         val used = Platform.memory.used
         if (used == Memory.UNKNOWN) return
         assertTrue(used > 0)

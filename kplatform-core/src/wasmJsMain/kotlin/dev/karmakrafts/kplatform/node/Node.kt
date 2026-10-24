@@ -18,6 +18,8 @@
 
 package dev.karmakrafts.kplatform.node
 
-private fun getOs(): Os = js("""require('os')""")
+// See https://youtrack.jetbrains.com/issue/KT-86192/K-Wasm-Raise-a-warning-on-usage-of-top-level-require-in-JsFun
+@JsFun("((module) => () => module)(((typeof process !== 'undefined') && (process.release.name === 'node')) ? await import(/* webpackIgnore: true */'node:os') : null)")
+private external fun requireOs(): Os
 
-internal actual val os: Os by lazy(::getOs)
+internal actual val os: Os by lazy(::requireOs)

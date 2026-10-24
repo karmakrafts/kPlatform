@@ -21,6 +21,6 @@ import android.os.Build
 internal object AndroidOs : Os {
     override val family: OsFamily get() = OsFamily.ANDROID
     override val name: String = "Android"
-    override val version: String get() = Build.VERSION.RELEASE
+    override val version: String get() = Build.VERSION.RELEASE ?: "Unknown" // May be null in host tests
     override val vendor: String = "Google"
 }

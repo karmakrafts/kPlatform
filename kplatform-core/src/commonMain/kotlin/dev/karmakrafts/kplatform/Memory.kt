@@ -16,8 +16,6 @@
 
 package dev.karmakrafts.kplatform
 
-import dev.karmakrafts.kplatform.Memory.Companion.UNKNOWN
-
 
 /**
  * Represents information about a pool of memory, either physical or virtual.

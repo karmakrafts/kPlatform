@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalKotlinGradlePluginApi::class, ExperimentalUnsignedTypes::class)
+@file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
 import dev.karmakrafts.conventions.configureJava
 import dev.karmakrafts.conventions.dokka.configureDokka
@@ -23,13 +23,17 @@ import dev.karmakrafts.conventions.dokka.withKotlinxIo
 import dev.karmakrafts.conventions.kotlin.defaultCompilerOptions
 import dev.karmakrafts.conventions.kotlin.withAndroidLibrary
 import dev.karmakrafts.conventions.kotlin.withBrowser
+import dev.karmakrafts.conventions.kotlin.withDefaultDeviceTests
+import dev.karmakrafts.conventions.kotlin.withDefaultHostTests
 import dev.karmakrafts.conventions.kotlin.withJvm
 import dev.karmakrafts.conventions.kotlin.withNative
 import dev.karmakrafts.conventions.kotlin.withNodeJs
 import dev.karmakrafts.conventions.kotlin.withWasmWasi
+import dev.karmakrafts.conventions.kotlin.withWasmtime
 import dev.karmakrafts.conventions.kotlin.withWeb
 import dev.karmakrafts.conventions.setProjectInfo
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 
 plugins {
@@ -53,7 +57,10 @@ kotlin {
     }
     defaultCompilerOptions()
     withSourcesJar()
-    withAndroidLibrary("$group.core")
+    withAndroidLibrary("$group.core") {
+        withDefaultHostTests()
+        withDefaultDeviceTests()
+    }
     withNative {
         if (konanTarget.family.isAppleFamily) {
             compilations {
@@ -68,14 +75,15 @@ kotlin {
     withJvm()
     withWeb {
         compilerOptions {
-            target = "es2015"
+            target = "es2020"
         }
         useEsModules()
         withBrowser()
         withNodeJs()
     }
     withWasmWasi {
-        withNodeJs()
+        @OptIn(ExperimentalWasmDsl::class) //
+        withWasmtime()
     }
     applyDefaultHierarchyTemplate {
         common {

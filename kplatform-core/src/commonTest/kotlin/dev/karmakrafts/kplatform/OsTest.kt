@@ -22,7 +22,7 @@ import kotlin.test.assertNotEquals
 
 class OsTest {
     @Test
-    fun `Family is not unknown`() {
+    fun familyIsNotUnknown() {
         if (Platform.runtime.type == RuntimeType.WASI) return // WASI can't know its own host
         val family = Platform.os.family
         assertNotEquals(OsFamily.UNKNOWN, family)
@@ -30,21 +30,21 @@ class OsTest {
     }
 
     @Test
-    fun `Name is not empty when known`() {
+    fun nameIsNotEmptyWhenKnown() {
         val name = Platform.os.name ?: return
         assertFalse(name.isEmpty())
         println("OS Name: $name")
     }
 
     @Test
-    fun `Vendor is not empty`() {
+    fun vendorIsNotEmptyWhenKnown() {
         val vendor = Platform.os.vendor ?: return
         assertFalse(vendor.isEmpty())
         println("OS Vendor: $vendor")
     }
 
     @Test
-    fun `Version is not empty`() {
+    fun versionIsNotEmptyWhenKnown() {
         val version = Platform.os.version ?: return
         assertFalse(version.isEmpty())
         println("OS Version: $version")

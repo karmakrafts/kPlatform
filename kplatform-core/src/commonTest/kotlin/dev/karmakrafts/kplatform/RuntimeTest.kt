@@ -22,28 +22,28 @@ import kotlin.test.assertTrue
 
 class RuntimeTest {
     @Test
-    fun `Name is not empty`() {
+    fun nameIsNotEmpty() {
         val name = Platform.runtime.name
         assertNotNull(name)
         println("RT name: $name")
     }
 
     @Test
-    fun `Vendor is not empty`() {
+    fun vendorIsNotEmpty() {
         val vendor = Platform.runtime.vendor
         assertNotNull(vendor)
         println("RT vendor: $vendor")
     }
 
     @Test
-    fun `Version is not empty`() {
+    fun versionIsNotEmpty() {
         val version = Platform.runtime.version
         assertNotNull(version)
         println("RT version: $version")
     }
 
     @Test
-    fun `Memory size is not 0 when known`() {
+    fun memorySizeIsNotZeroWhenKnown() {
         val size = Platform.runtime.memory.size
         if (size == Memory.UNKNOWN) return
         assertTrue(size > 0)
@@ -51,7 +51,7 @@ class RuntimeTest {
     }
 
     @Test
-    fun `Available memory is not 0 when known`() {
+    fun availableMemoryIsNotZeroWhenKnown() {
         val available = Platform.runtime.memory.available
         if (available == Memory.UNKNOWN) return
         assertTrue(available > 0)
@@ -59,7 +59,7 @@ class RuntimeTest {
     }
 
     @Test
-    fun `Used memory is not 0 when known`() {
+    fun usedMemoryIsNotZeroWhenKnown() {
         val used = Platform.runtime.memory.used
         if (used == Memory.UNKNOWN) return
         assertTrue(used > 0)
@@ -67,7 +67,7 @@ class RuntimeTest {
     }
 
     @Test
-    fun `Iterate over environment`() {
+    fun iterateOverEnvironment() {
         for ((key, value) in Platform.runtime.environment.vars) {
             println("RT environment variable $key: ${value ?: "(no value)"}")
         }

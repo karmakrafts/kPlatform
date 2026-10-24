@@ -25,7 +25,8 @@ import dev.karmakrafts.kplatform.node.NodeMemory
 import dev.karmakrafts.kplatform.node.NodeOs
 import dev.karmakrafts.kplatform.node.NodeRuntime
 
-private fun checkIsNode(): Boolean = js("""'process' in globalThis && 'versions' in globalThis.process && 'node' in globalThis.process.versions""")
+private fun checkIsNode(): Boolean =
+    js("""'process' in globalThis && 'versions' in globalThis.process && 'node' in globalThis.process.versions""")
 
 private val isNode: Boolean by lazy(::checkIsNode)
 

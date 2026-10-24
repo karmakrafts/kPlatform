@@ -1,5 +1,20 @@
 ## [Unreleased]
 
+### Added
+
+- Android device tests
+
+### Changed
+
+- Updated to Karma Conventions 1.23.0.315-SNAPSHOT
+- Updated to Gradle 9.8.1
+- Updated to AGP 9.4.1
+- Updated to OSHI 7.7.2
+- Updated to Kotlin 2.5.0-Beta2
+- Updated to Kotlin Wrappers 2026.10.1
+- Updated to Dokka 2.3.0-Beta
+- Enabled ES2020 target for Kotlin/JS
+
 ## [1.2.0]
 
 ### Changed
