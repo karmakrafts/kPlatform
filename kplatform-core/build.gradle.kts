@@ -27,6 +27,7 @@ import dev.karmakrafts.conventions.kotlin.withBrowser
 import dev.karmakrafts.conventions.kotlin.withDefaultDeviceTests
 import dev.karmakrafts.conventions.kotlin.withDefaultHostTests
 import dev.karmakrafts.conventions.kotlin.withJvm
+import dev.karmakrafts.conventions.kotlin.withLinuxArm64StandaloneTests
 import dev.karmakrafts.conventions.kotlin.withNative
 import dev.karmakrafts.conventions.kotlin.withNodeJs
 import dev.karmakrafts.conventions.kotlin.withWasmWasi
@@ -73,6 +74,7 @@ kotlin {
             }
         }
     }
+    withLinuxArm64StandaloneTests()
     withJvm()
     withWeb {
         compilerOptions {
