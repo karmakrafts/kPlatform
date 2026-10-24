@@ -9,11 +9,16 @@ kotlinBrowser = "2026.10.1" # https://github.com/JetBrains/kotlin-wrappers/relea
 dokka = "2.3.0-Beta" # https://github.com/Kotlin/dokka/releases
 karmaConventions = "1.23.0.315-SNAPSHOT" # https://github.com/karmakrafts/karma-conventions/tags
 oshi = "7.7.2" # https://github.com/oshi/oshi/releases
+jna = "5.19.1" # https://github.com/java-native-access/jna/tags
 
 [libraries]
 
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-wrappers-browser = { module = "org.jetbrains.kotlin-wrappers:kotlin-browser", version.ref = "kotlinBrowser" }
+
+jna = { module = "net.java.dev.jna:jna", version.ref = "jna" }
+jna-platform = { module = "net.java.dev.jna:jna-platform", version.ref = "jna" }
+
 oshi-core = { module = "com.github.oshi:oshi-core", version.ref = "oshi" }
 
 [plugins]

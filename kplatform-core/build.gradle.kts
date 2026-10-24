@@ -16,6 +16,7 @@
 
 @file:OptIn(ExperimentalKotlinGradlePluginApi::class)
 
+import dev.karmakrafts.conventions.asAAR
 import dev.karmakrafts.conventions.configureJava
 import dev.karmakrafts.conventions.dokka.configureDokka
 import dev.karmakrafts.conventions.dokka.withKotlin
@@ -101,12 +102,37 @@ kotlin {
         }
         named("jvmAndAndroidMain") {
             dependencies {
-                implementation(libs.oshi.core)
+                val oshiCore = libs.oshi.core.get()
+                implementation("${oshiCore.module}:${oshiCore.version}") {
+                    exclude(group = "net.java.dev.jna", module = "jna")
+                    exclude(group = "net.java.dev.jna", module = "jna-jpms")
+                    exclude(group = "net.java.dev.jna", module = "jna-platform")
+                    exclude(group = "net.java.dev.jna", module = "jna-platform-jpms")
+                    exclude(group = "net.java.dev.jna", module = "jna-runtime")
+                    exclude(group = "net.java.dev.jna", module = "jna-runtime-jpms")
+                }
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation(libs.jna)
+                implementation(libs.jna.platform)
+            }
+        }
+        androidMain {
+            dependencies {
+                implementation(libs.jna.asProvider().asAAR())
             }
         }
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
+            }
+        }
+        named("androidHostTest") {
+            dependencies {
+                implementation(libs.jna)
+                implementation(libs.jna.platform)
             }
         }
     }
