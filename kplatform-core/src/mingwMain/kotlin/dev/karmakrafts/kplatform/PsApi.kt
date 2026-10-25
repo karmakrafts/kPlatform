@@ -44,7 +44,7 @@ import platform.windows.SIZE_TVar
 internal object PsApi {
     // See https://learn.microsoft.com/en-us/windows/win32/api/psapi/ns-psapi-process_memory_counters_ex
     class ProcessMemoryCountersEx(rawPtr: NativePtr) : CStructVar(rawPtr) {
-        @Suppress("DEPRECATION")
+        @Suppress("DEPRECATION", "DEPRECATION_ERROR")
         companion object : Type(sizeOf<DWORDVar>() * 2 + sizeOf<SIZE_TVar>() * 9, alignOf<SIZE_TVar>())
 
         var privateUsage: SIZE_T
