@@ -16,8 +16,8 @@
 
 package dev.karmakrafts.kplatform
 
-actual object Platform {
-    actual val runtime: Runtime get() = WasiRuntime
-    actual val os: Os get() = WasiOs
-    actual val memory: Memory get() = Memory.Unknown
+public actual object Platform {
+    public actual val runtime: Runtime get() = WasiRuntime
+    public actual val os: Os get() = WasiOs
+    public actual val memory: Memory get() = Memory.Unknown
 }

@@ -58,6 +58,7 @@ kotlin {
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
     defaultCompilerOptions()
+    explicitApi()
     withSourcesJar()
     withAndroidLibrary("$group.core") {
         withDefaultHostTests()

@@ -19,24 +19,24 @@ package dev.karmakrafts.kplatform
 /**
  * Provides information about the operating system.
  */
-interface Os {
+public interface Os {
     /**
      * The family which the current operating system belongs to.
      */
-    val family: OsFamily
+    public val family: OsFamily
 
     /**
      * The full name of the current operating system.
      */
-    val name: String?
+    public val name: String?
 
     /**
      * The version of the current operating system (or its kernel).
      */
-    val version: String?
+    public val version: String?
 
     /**
      * The vendor name of the current operating system.
      */
-    val vendor: String?
+    public val vendor: String?
 }

@@ -20,18 +20,18 @@ package dev.karmakrafts.kplatform
 /**
  * Represents information about a pool of memory, either physical or virtual.
  */
-interface Memory {
-    companion object {
+public interface Memory {
+    public companion object {
         /**
          * Sentinel value used when a memory metric is not supported.
          */
-        const val UNKNOWN: Long = -1
+        public const val UNKNOWN: Long = -1
     }
 
     /**
      * Represents unavailable memory information.
      */
-    object Unknown : Memory {
+    public object Unknown : Memory {
         override val size: Long = UNKNOWN
         override val available: Long = UNKNOWN
         override val used: Long = UNKNOWN
@@ -41,17 +41,17 @@ interface Memory {
      * The total size of the memory in bytes.
      * [UNKNOWN] if not supported.
      */
-    val size: Long
+    public val size: Long
 
     /**
      * The amount of memory available to be allocated in bytes.
      * [UNKNOWN] if not supported.
      */
-    val available: Long
+    public val available: Long
 
     /**
      * The amount of memory currently in use in bytes.
      * [UNKNOWN] if not supported.
      */
-    val used: Long
+    public val used: Long
 }

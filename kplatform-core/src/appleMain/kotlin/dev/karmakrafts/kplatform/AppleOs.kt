@@ -22,7 +22,7 @@ import kotlinx.cinterop.UnsafeNumber
 internal expect val osFamily: OsFamily
 
 @OptIn(ExperimentalForeignApi::class, UnsafeNumber::class)
-object AppleOs : Os {
+public object AppleOs : Os {
     override val family: OsFamily get() = osFamily
 
     override val name: String? by lazy {

@@ -16,8 +16,8 @@
 
 package dev.karmakrafts.kplatform
 
-actual object Platform {
-    actual val os: Os get() = AppleOs
-    actual val runtime: Runtime get() = AppleRuntime
-    actual val memory: Memory get() = AppleGlobalMemory
+public actual object Platform {
+    public actual val os: Os get() = AppleOs
+    public actual val runtime: Runtime get() = AppleRuntime
+    public actual val memory: Memory get() = AppleGlobalMemory
 }

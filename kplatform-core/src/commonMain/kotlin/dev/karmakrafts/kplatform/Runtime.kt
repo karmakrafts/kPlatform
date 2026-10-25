@@ -19,35 +19,35 @@ package dev.karmakrafts.kplatform
 /**
  * Provides information and state about the current runtime.
  */
-interface Runtime {
+public interface Runtime {
     /**
      * The type of the runtime of the current process.
      */
-    val type: RuntimeType
+    public val type: RuntimeType
 
     /**
      * The name of the runtime of the current process.
      */
-    val name: String?
+    public val name: String?
 
     /**
      * The vendor name of the runtime of the current process.
      */
-    val vendor: String?
+    public val vendor: String?
 
     /**
      * The version of the runtime of the current process.
      */
-    val version: String?
+    public val version: String?
 
     /**
      * Memory information about the current process.
      */
-    val memory: Memory
+    public val memory: Memory
 
     /**
      * All system environment variables visible to the current process.
      * For platforms that do not have direct access to the environment, this will be empty.
      */
-    val environment: Environment
+    public val environment: Environment
 }

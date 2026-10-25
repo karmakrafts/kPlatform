@@ -16,8 +16,8 @@
 
 package dev.karmakrafts.kplatform
 
-actual object Platform {
-    actual val os: Os get() = JvmOs
-    actual val runtime: Runtime get() = JvmRuntime
-    actual val memory: Memory get() = OshiGlobalMemory
+public actual object Platform {
+    public actual val os: Os get() = JvmOs
+    public actual val runtime: Runtime get() = JvmRuntime
+    public actual val memory: Memory get() = OshiGlobalMemory
 }

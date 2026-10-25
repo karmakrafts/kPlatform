@@ -30,8 +30,8 @@ private fun checkIsNode(): Boolean =
 
 private val isNode: Boolean by lazy(::checkIsNode)
 
-actual object Platform {
-    actual val runtime: Runtime = if (isNode) NodeRuntime else BrowserRuntime
-    actual val os: Os = if (isNode) NodeOs else BrowserOs
-    actual val memory: Memory = if (isNode) NodeMemory else BrowserMemory
+public actual object Platform {
+    public actual val runtime: Runtime = if (isNode) NodeRuntime else BrowserRuntime
+    public actual val os: Os = if (isNode) NodeOs else BrowserOs
+    public actual val memory: Memory = if (isNode) NodeMemory else BrowserMemory
 }

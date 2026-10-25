@@ -16,8 +16,8 @@
 
 package dev.karmakrafts.kplatform
 
-actual object Platform {
-    actual val os: Os get() = LinuxOs
-    actual val runtime: Runtime get() = LinuxRuntime
-    actual val memory: Memory get() = LinuxGlobalMemory
+public actual object Platform {
+    public actual val os: Os get() = LinuxOs
+    public actual val runtime: Runtime get() = LinuxRuntime
+    public actual val memory: Memory get() = LinuxGlobalMemory
 }

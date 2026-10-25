@@ -16,8 +16,8 @@
 
 package dev.karmakrafts.kplatform
 
-actual object Platform {
-    actual val os: Os get() = AndroidOs
-    actual val runtime: Runtime get() = AndroidRuntime
-    actual val memory: Memory get() = OshiGlobalMemory
+public actual object Platform {
+    public actual val os: Os get() = AndroidOs
+    public actual val runtime: Runtime get() = AndroidRuntime
+    public actual val memory: Memory get() = OshiGlobalMemory
 }

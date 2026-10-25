@@ -16,8 +16,8 @@
 
 package dev.karmakrafts.kplatform
 
-actual object Platform {
-    actual val os: Os get() = WindowsOs
-    actual val runtime: Runtime get() = WindowsRuntime
-    actual val memory: Memory get() = WindowsGlobalMemory
+public actual object Platform {
+    public actual val os: Os get() = WindowsOs
+    public actual val runtime: Runtime get() = WindowsRuntime
+    public actual val memory: Memory get() = WindowsGlobalMemory
 }

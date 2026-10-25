@@ -19,19 +19,19 @@ package dev.karmakrafts.kplatform
 /**
  * Provides platform-wide information about the current process environment.
  */
-expect object Platform {
+public expect object Platform {
     /**
      * Information about the operating system.
      */
-    val os: Os
+    public val os: Os
 
     /**
      * Information about the runtime.
      */
-    val runtime: Runtime
+    public val runtime: Runtime
 
     /**
      * Global (physical) memory information.
      */
-    val memory: Memory
+    public val memory: Memory
 }
